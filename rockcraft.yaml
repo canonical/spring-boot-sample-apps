@@ -1,0 +1,19 @@
+name: openjdk-11-jre
+base: ubuntu:22.04
+version: '0.1'
+summary: Chisel based Java 11 openjdk JRE ROCK
+description: |
+    This is a minimal ROCK for Java 11 openjdk JRE using Chisel
+    to copy only the required files 
+license: GPL-3.0
+platforms:
+  #amd64:
+    aarch64:
+
+parts:
+   build-context:
+      plugin: nil
+      source: /src/chisel-release
+      source-type: local
+      override-build:
+         chisel cut --release ./ --root ${CRAFT_PART_INSTALL} openjdk-11-jre-headless_bins
