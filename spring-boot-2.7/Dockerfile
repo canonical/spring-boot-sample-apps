@@ -1,4 +1,4 @@
-FROM gradle:jdk11
+FROM gradle:jdk11 AS build
 
 COPY . /build
 
@@ -6,13 +6,13 @@ WORKDIR /build
 
 RUN ./gradlew build
 
-FROM openjdk:11
+FROM eclipse-temurin:11-jdk-jammy
 
-RUN addgroup --system spring-boot && adduser --system --no-create-home --ingroup spring-boot spring-boot
+RUN adduser --system --no-create-home --disabled-login --group spring-boot
 
 USER spring-boot
 
-COPY --from=0 --chown=spring-boot:spring-boot /build/build/libs/sample-app-0.0.1-SNAPSHOT.jar /app/sample-app-0.0.1-SNAPSHOT.jar
+COPY --from=build --chown=spring-boot:spring-boot /build/build/libs/sample-app-0.0.1-SNAPSHOT.jar /app/sample-app-0.0.1-SNAPSHOT.jar
 
 WORKDIR /app
 

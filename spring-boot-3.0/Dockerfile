@@ -6,9 +6,9 @@ WORKDIR /build
 
 RUN ./gradlew build
 
-FROM openjdk:17
+FROM eclipse-temurin:17-jdk-jammy
 
-RUN adduser --system --no-create-home --user-group spring-boot
+RUN adduser --system --no-create-home --disabled-login --group spring-boot
 
 USER spring-boot
 
