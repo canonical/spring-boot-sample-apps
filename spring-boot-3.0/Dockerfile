@@ -1,4 +1,4 @@
-FROM gradle:jdk17
+FROM gradle:jdk17 AS build
 
 COPY . /build
 
@@ -12,7 +12,7 @@ RUN adduser --system --no-create-home --disabled-login --group spring-boot
 
 USER spring-boot
 
-COPY --from=0 --chown=spring-boot:spring-boot /build/build/libs/sample-app-0.0.1-SNAPSHOT.jar /app/sample-app-0.0.1-SNAPSHOT.jar
+COPY --from=build --chown=spring-boot:spring-boot /build/build/libs/sample-app-0.0.1-SNAPSHOT.jar /app/sample-app-0.0.1-SNAPSHOT.jar
 
 WORKDIR /app
 
