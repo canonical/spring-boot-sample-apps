@@ -42,6 +42,7 @@ jobs:
 
       - name: Build and push layered Docker image
         run: |
+          cd spring-boot-${{ matrix.version }}
           ./gradlew bootBuildImage --imageName=ghcr.io/${{ github.repository_owner }}/spring-boot:${{ matrix.version }}-layered
           docker push ghcr.io/${{ github.repository_owner }}/spring-boot:${{ matrix.version }}-layered
 
