@@ -10,7 +10,6 @@ jobs:
     strategy:
       matrix:
         version: ["2.7", "3.0"]
-        java: ["11", "17"]
         include:
           - version: "2.7"
             java: "11"
