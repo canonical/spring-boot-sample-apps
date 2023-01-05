@@ -33,3 +33,13 @@ jobs:
           context: "{{defaultContext}}:spring-boot-${{ matrix.version }}"
           push: ${{ github.event_name != 'pull_request' }}
           tags: ghcr.io/${{ github.repository_owner }}/spring-boot:${{ matrix.version }}
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+
+      - name: Build and push layered Docker image
+        run: |
+          ./gradlew bootBuildImage --imageName=ghcr.io/${{ github.repository_owner }}/spring-boot:${{ matrix.version }}-layered
+          docker push ghcr.io/${{ github.repository_owner }}/spring-boot:${{ matrix.version }}-layered
+
+

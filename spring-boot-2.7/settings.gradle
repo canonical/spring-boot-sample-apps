@@ -5,4 +5,4 @@ pluginManagement {
 		gradlePluginPortal()
 	}
 }
-rootProject.name = 'sample-app'
+rootProject.name = 'sample-app-spring-boot-2.7'
