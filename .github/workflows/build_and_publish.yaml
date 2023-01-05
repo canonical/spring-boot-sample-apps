@@ -10,6 +10,11 @@ jobs:
     strategy:
       matrix:
         version: ["2.7", "3.0"]
+        include:
+          - version: "2.7"
+            java: "11"
+          - version: "3.0"
+            java: "17"
 
     runs-on: ubuntu-latest
     permissions:
@@ -17,6 +22,9 @@ jobs:
       packages: write
 
     steps:
+      - name: Checkout project sources
+        uses: actions/checkout@v2
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
@@ -33,3 +41,19 @@ jobs:
           context: "{{defaultContext}}:spring-boot-${{ matrix.version }}"
           push: ${{ github.event_name != 'pull_request' }}
           tags: ghcr.io/${{ github.repository_owner }}/spring-boot:${{ matrix.version }}
+
+      - uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: ${{ matrix.java }}
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+
+      - name: Build and push layered Docker image
+        run: |
+          cd spring-boot-${{ matrix.version }}
+          ./gradlew bootBuildImage --imageName=ghcr.io/${{ github.repository_owner }}/spring-boot:${{ matrix.version }}-layered
+          docker push ghcr.io/${{ github.repository_owner }}/spring-boot:${{ matrix.version }}-layered
+
+
