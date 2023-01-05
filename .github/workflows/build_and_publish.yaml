@@ -10,6 +10,12 @@ jobs:
     strategy:
       matrix:
         version: ["2.7", "3.0"]
+        java: ["11", "17"]
+        include:
+          - version: "2.7"
+            java: "11"
+          - version: "3.0"
+            java: "17"
 
     runs-on: ubuntu-latest
     permissions:
@@ -36,6 +42,11 @@ jobs:
           context: "{{defaultContext}}:spring-boot-${{ matrix.version }}"
           push: ${{ github.event_name != 'pull_request' }}
           tags: ghcr.io/${{ github.repository_owner }}/spring-boot:${{ matrix.version }}
+
+      - uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: ${{ matrix.java }}
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
