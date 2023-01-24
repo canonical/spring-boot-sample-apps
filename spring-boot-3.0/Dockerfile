@@ -18,4 +18,4 @@ WORKDIR /app
 
 HEALTHCHECK --timeout=1s CMD curl -sSf http://127.0.0.1:8080/actuator/health
 
-CMD ["java", "-jar", "sample-app-spring-boot-2.7-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "sample-app-spring-boot-2.7-mysql-0.0.1-SNAPSHOT.jar"]

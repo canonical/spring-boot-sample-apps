@@ -1,4 +1,4 @@
-FROM gradle:jdk11 AS build
+FROM gradle:jdk17 AS build
 
 COPY . /build
 
@@ -6,7 +6,7 @@ WORKDIR /build
 
 RUN ./gradlew build
 
-FROM eclipse-temurin:11-jdk-jammy
+FROM eclipse-temurin:17-jdk-jammy
 
 RUN adduser --system --no-create-home --disabled-login --group spring-boot
 
@@ -18,4 +18,4 @@ WORKDIR /app
 
 HEALTHCHECK --timeout=1s CMD curl -sSf http://127.0.0.1:8080/actuator/health
 
-CMD ["java", "-jar", "sample-app-spring-boot-2.7-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "sample-app-spring-boot-3.0-mysql-0.0.1-SNAPSHOT.jar"]

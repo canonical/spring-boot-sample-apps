@@ -9,13 +9,16 @@ jobs:
   build-and-push-image:
     strategy:
       matrix:
-        version: ["2.7", "3.0"]
+        version: ["2.7", "3.0", "2.7-mysql", "3.0-mysql"]
         include:
           - version: "2.7"
             java: "11"
           - version: "3.0"
             java: "17"
-
+          - version: "2.7-mysql"
+            java: "11"
+          - version: "3.0-mysql"
+            java: "17"
     runs-on: ubuntu-latest
     permissions:
       contents: read
