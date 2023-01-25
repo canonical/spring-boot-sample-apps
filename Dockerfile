@@ -1,4 +1,7 @@
-FROM gradle:jdk11 AS build
+ARG jvm_version=11
+ARG version=2.7
+
+FROM gradle:jdk${jvm_version}} AS build
 
 COPY . /build
 
@@ -6,9 +9,7 @@ WORKDIR /build
 
 RUN ./gradlew bootJar
 
-FROM eclipse-temurin:11-jdk-jammy
-
-ARG version=2.7
+FROM eclipse-temurin:${jvm_version}-jdk-jammy
 
 RUN adduser --system --no-create-home --disabled-login --group spring-boot
 
