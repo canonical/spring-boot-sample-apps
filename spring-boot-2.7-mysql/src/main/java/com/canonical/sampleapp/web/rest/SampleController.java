@@ -1,7 +1,6 @@
 package com.canonical.sampleapp.web.rest;
 
 import java.lang.management.ManagementFactory;
-import java.lang.management.RuntimeMXBean;
 import java.util.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;

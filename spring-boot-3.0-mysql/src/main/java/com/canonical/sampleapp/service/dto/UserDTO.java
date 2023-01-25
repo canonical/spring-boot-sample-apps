@@ -3,7 +3,7 @@ package com.canonical.sampleapp.service.dto;
 import java.io.Serializable;
 import java.time.Instant;
 
-import javax.validation.constraints.*;
+import jakarta.validation.constraints.*;
 
 import com.canonical.sampleapp.domain.User;
 
