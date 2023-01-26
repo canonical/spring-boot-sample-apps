@@ -1,3 +1,8 @@
+/*
+ * Copyright 2023 Canonical Ltd.
+ * See LICENSE file for licensing details.
+ */
+
 package com.canonical.sampleapp.web.rest.exceptions;
 
 import java.net.URI;

@@ -1,3 +1,7 @@
+<!--
+    Copyright 2023 Canonical Ltd.
+    See LICENSE file for licensing details.
+-->
 <?xml version="1.0" encoding="utf-8"?>
 <databaseChangeLog
     xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
