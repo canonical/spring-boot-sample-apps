@@ -3,7 +3,7 @@
  * See LICENSE file for licensing details.
  */
 
-package com.canonical.sampleapp;
+package com.canonical.sampleapp.web.rest;
 
 import java.lang.management.ManagementFactory;
 import java.util.Collections;

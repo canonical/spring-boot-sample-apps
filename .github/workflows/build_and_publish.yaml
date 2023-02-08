@@ -9,13 +9,16 @@ jobs:
   build-and-push-image:
     strategy:
       matrix:
-        version: ["2.7", "3.0"]
+        version: ["2.7", "3.0", "2.7-mysql", "3.0-mysql"]
         include:
           - version: "2.7"
             java: "11"
           - version: "3.0"
             java: "17"
-
+          - version: "2.7-mysql"
+            java: "11"
+          - version: "3.0-mysql"
+            java: "17"
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -38,9 +41,13 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
         with:
-          context: "{{defaultContext}}:spring-boot-${{ matrix.version }}"
+          context: "spring-boot-${{ matrix.version }}/"
           push: ${{ github.event_name != 'pull_request' }}
           tags: ghcr.io/${{ github.repository_owner }}/spring-boot:${{ matrix.version }}
+          build-args: |
+            jvm_version=${{ matrix.java }}
+            version=${{ matrix.version }}
+          file: "Dockerfile"
 
       - uses: actions/setup-java@v3
         with:

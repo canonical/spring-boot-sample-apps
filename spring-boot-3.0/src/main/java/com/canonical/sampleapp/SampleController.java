@@ -1,8 +1,15 @@
+/*
+ * Copyright 2023 Canonical Ltd.
+ * See LICENSE file for licensing details.
+ */
+
 package com.canonical.sampleapp;
 
 import java.lang.management.ManagementFactory;
-import java.lang.management.RuntimeMXBean;
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
