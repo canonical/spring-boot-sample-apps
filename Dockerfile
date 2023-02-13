@@ -2,7 +2,7 @@
 # See LICENSE file for licensing details.
 
 ARG jvm_version=11
-ENV version=2.7
+ARG version=2.7
 
 FROM gradle:jdk${jvm_version} AS build
 
@@ -24,4 +24,7 @@ WORKDIR /app
 
 HEALTHCHECK --timeout=1s CMD curl -sSf http://127.0.0.1:8080/actuator/health
 
-CMD ["java", "-jar", "sample-app-spring-boot-${version}-0.0.1-SNAPSHOT.jar"]
+RUN printf "exec java -jar sample-app-spring-boot-%s-0.0.1-SNAPSHOT.jar" "${version}" > /usr/local/bin/run
+RUN chmod +x /usr/local/bin/run
+
+CMD ["bash", "/usr/local/bin/run"]
