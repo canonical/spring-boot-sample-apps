@@ -2,7 +2,7 @@
 # See LICENSE file for licensing details.
 
 ARG jvm_version=11
-ARG version=2.7
+ENV version=2.7
 
 FROM gradle:jdk${jvm_version} AS build
 
