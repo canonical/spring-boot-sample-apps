@@ -24,4 +24,7 @@ WORKDIR /app
 
 HEALTHCHECK --timeout=1s CMD curl -sSf http://127.0.0.1:8080/actuator/health
 
-CMD ["java", "-jar", "sample-app-spring-boot-${version}-0.0.1-SNAPSHOT.jar"]
+# we instanciate this env variable to be used in CMD
+ENV APP_VERSION="${version}"
+
+CMD ["java", "-jar", "sample-app-spring-boot-${APP_VERSION}-0.0.1-SNAPSHOT.jar"]
