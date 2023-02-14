@@ -6,6 +6,37 @@ on:
   pull_request:
 
 jobs:
+  build-and-test-images:
+    strategy:
+      fail-fast: false
+      matrix:
+        version: ["2.7", "3.0", "2.7-mysql", "3.0-mysql"]
+        include:
+          - version: "2.7"
+            java: "11"
+          - version: "3.0"
+            java: "17"
+          - version: "2.7-mysql"
+            java: "11"
+          - version: "3.0-mysql"
+            java: "17"
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout project sources
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build and test Docker image
+        run: |
+          docker build -t test -f Dockerfile --build-arg jvm_version=${{ matrix.java }} --build-arg version=${{ matrix.version }} spring-boot-${{ matrix.version }}/
+          docker run --rm -d test
+          sleep 30
+          docker exec -it test echo "I'm still alive!"
+
   build-and-push-image:
     strategy:
       matrix:
@@ -30,13 +61,6 @@ jobs:
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
-
-      - name: Build and test Docker image
-        run: |
-          docker build -t test -f Dockerfile --build-arg jvm_version=${{ matrix.java }} --build-arg version=${{ matrix.version }} spring-boot-${{ matrix.version }}/
-          docker run --rm -d test
-          sleep 30
-          docker exec -it test echo "I'm still alive!"
 
       - name: Log in to the Container registry
         uses: docker/login-action@v2
