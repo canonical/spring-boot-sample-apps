@@ -10,9 +10,14 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
+    <!--
+    This changeset is required due to an issue with liquibase that doesn't create a primary key for DATABASECHANGELOG table,
+    but mysql-k8s charm is setup with group replication enabled even in standalone deployment, and group replication requires
+    all tables to have primary keys
+    -->
     <changeSet id="00000000000000" author="gschiano">
         <sql dbms="mysql">
-            ALTER TABLE `DATABASECHANGELOG` ADD `id2` INT NOT NULL AUTO_INCREMENT PRIMARY KEY FIRST;
+            ALTER TABLE `DATABASECHANGELOG` ADD `PRIMARY_KEY` INT NOT NULL AUTO_INCREMENT PRIMARY KEY FIRST;
         </sql>
     </changeSet>
     <changeSet id="00000000000001" author="gschiano">
