@@ -35,7 +35,7 @@ jobs:
           docker build -t test -f Dockerfile --build-arg jvm_version=${{ matrix.java }} --build-arg version=${{ matrix.version }} spring-boot-${{ matrix.version }}/
           docker run --rm -d --name test test
           sleep 30
-          docker exec -it test echo "I'm still alive!"
+          docker exec -i test echo "I'm still alive!"
 
   build-and-push-image:
     strategy:
